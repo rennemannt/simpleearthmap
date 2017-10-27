@@ -15,21 +15,15 @@
  */
 package org.rennemann.javafx.simpleearthmap;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import static org.testfx.api.FxAssert.verifyThat;
-import org.testfx.api.FxRobot;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
+import org.testfx.framework.junit.ApplicationTest;
 
 /**
  * Simple Earth Map Controller tests.
@@ -38,28 +32,27 @@ import static org.testfx.matcher.base.NodeMatchers.isVisible;
  */
 // tests may need to be performed in specific order when working with TestFX.
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public final class EarthMapPaneTest extends Application {
+public class EarthMapPaneTest extends ApplicationTest {
 
-    protected final FxRobot ROBOT = new FxRobot();
     private static final Double STAGE_WIDTH = 800D;
     private static final Double STAGE_HEIGHT = 400D;
-    private final EarthMapPane mapNode;
+    private final EarthMapPane earthMapPane;
 
     /**
      * Construct.
      *
      */
     public EarthMapPaneTest() {
-        Mappable mapNode = new CirclePlacemark(-82.0, 25.0, 20, Paint.valueOf("red"));
-        this.mapNode = new EarthMapPane(mapNode);
+        Mappable circle = new CirclePlacemark(0.0, 0.0, 10, Paint.valueOf("green"));
+        this.earthMapPane = new EarthMapPane(circle);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
         if (stage.getScene() == null) {
-            Scene scene = new Scene(mapNode);
+            Scene scene = new Scene(earthMapPane);
             stage.setScene(scene);
-            stage.setTitle(mapNode.getClass().getSimpleName() + " Sample");
+            stage.setTitle(earthMapPane.getClass().getSimpleName() + " Sample");
             stage.setWidth(STAGE_WIDTH);
             stage.setHeight(STAGE_HEIGHT);
             stage.show();
@@ -73,15 +66,11 @@ public final class EarthMapPaneTest extends Application {
         System.exit(0);
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     /**
      * Test the text fields for visibility.
      */
     @Test
-    public void testFXControls() {
+    public void testMapVisible() {
         verifyThat("#earthMapPane", isVisible());
     }
 
@@ -90,9 +79,10 @@ public final class EarthMapPaneTest extends Application {
      */
     @Test
     public void testPlotNode() {
-        Mappable mapNode = new CirclePlacemark(-82.0, 25.0, 55, Paint.valueOf("red"));
-        EarthMapPane instance = new EarthMapPane(mapNode);
-        instance.plotNode(mapNode);
+        Mappable circle = new CirclePlacemark(-82.0, 25.0, 55, Paint.valueOf("red"));
+        circle.getNode().setId("placemark");
+        earthMapPane.plotNode(circle);
+        verifyThat("#placemark", isVisible());
     }
 
 }

@@ -26,12 +26,18 @@
             <groupId>org.testfx</groupId>
             <artifactId>testfx-core</artifactId>
             <scope>test</scope>
-            <version>4.0.6-alpha</version>
+            <version>4.0.8-alpha</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit</artifactId>
+            <version>4.0.8-alpha</version>
+            <scope>test</scope>
             <type>jar</type>
         </dependency>
     </dependencies>
-    
-    
+       
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
